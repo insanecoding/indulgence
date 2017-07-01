@@ -1,11 +1,10 @@
+// react
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import './index.css';
+// components
+import { Hello } from './components/App/App';
 
 ReactDOM.render(
-  <App />,
+  <Hello compiler="Typescript" framework="React" />,
   document.getElementById('root') as HTMLElement
 );
-registerServiceWorker();
