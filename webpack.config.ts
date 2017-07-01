@@ -29,4 +29,4 @@ const config: webpack.Configuration = {
   }
 };
 
-export default config;
+export default config; // tslint:disable-line
