@@ -1,6 +1,9 @@
 import * as webpack from 'webpack';
 import * as path from 'path';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const PATHS = {
   app: path.join(__dirname, 'src'),

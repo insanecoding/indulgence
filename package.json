@@ -17,6 +17,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "dotenv": "^4.0.0",
     "html-webpack-plugin": "^2.29.0",
     "html-webpack-template-pug": "^1.1.1",
     "pug": "^2.0.0-rc.2",
