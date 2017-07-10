@@ -22,7 +22,7 @@ const commonConfig: webpack.Configuration = {
       // Required
       inject: false,
       template: '!!pug-loader!./public/index.pug'
-    })
+    }),
   ],
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
@@ -52,6 +52,7 @@ const developmentConfig = (): webpack.Configuration => {
       // unlike default `localhost`.
       host: process.env.HOST, // Defaults to `localhost`
       port: process.env.PORT, // Defaults to 8080
+      // maybe, use polling instead of watching
     },
     devtool: 'source-map',
 
