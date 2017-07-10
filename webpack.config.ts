@@ -12,7 +12,9 @@ const PATHS = {
 };
 
 const commonConfig: webpack.Configuration = {
-  entry: PATHS.app,
+  entry: {
+    react: ['react-hot-loader/patch', PATHS.app],
+  },
   output: {
     filename: 'bundle.js',
     path: PATHS.build
@@ -23,6 +25,8 @@ const commonConfig: webpack.Configuration = {
       inject: false,
       template: '!!pug-loader!./public/index.pug'
     }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
   ],
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
@@ -42,6 +46,10 @@ const developmentConfig = (): webpack.Configuration => {
 
       // Display only errors to reduce the amount of output.
       stats: 'errors-only',
+
+      // Don't refresh if hot loading fails. Good while
+      // implementing the client interface.
+      hotOnly: true,
 
       // Parse host and port from env to allow customization.
       //
