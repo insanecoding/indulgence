@@ -1,6 +1,7 @@
 {
   "extends": [
     "tslint-config-airbnb",
+    "tslint:latest",
     "tslint-react"
   ],
   "rules": {
@@ -19,6 +20,7 @@
     "curly": true,
     "eofline": false,
     "forin": true,
+    "import-name": false,
     "indent": [
       true,
       "spaces"
@@ -67,6 +69,8 @@
       "check-open-brace",
       "check-whitespace"
     ],
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
     "quotemark": [
       true,
       "single",
