@@ -1,26 +1,27 @@
 // react
-import React, { ReactElement } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 // components
-import { Hello } from './components/App/App';
+import App from './components/App/App';
 // utils
 import { AppContainer } from 'react-hot-loader';
 
-const App = (
-  <AppContainer>
-    <Hello compiler="Typescript" framework="React"/>
-  </AppContainer>
-);
+const mountNode  = document.getElementById('root') as HTMLElement;
 
-const Render = (Application: ReactElement<{}>) => {
-  ReactDOM.render(
-    Application,
-    document.getElementById('root') as HTMLElement
+const doRender = (Application: any, root: HTMLElement) => {
+  const fullApp = (
+    <AppContainer>
+      <Application/>
+    </AppContainer>
   );
+  render(fullApp, root);
 };
 
-Render(App);
+doRender(App, mountNode);
 
 if (module.hot) {
-  module.hot.accept('./components/App/App', () => Render(App));
+  module.hot.accept('./components/App/App', () => {
+    const nextApp = require('./components/App/App').default;
+    doRender(nextApp, mountNode);
+  });
 }

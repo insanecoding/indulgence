@@ -1,11 +1,8 @@
 // react
 import React from 'react';
+// components
+import Greeter from '../Greeter/Greeter';
 
-export interface HelloProps {
-  compiler: string;
-  framework: string;
-}
+const App = () => <Greeter compiler="Typescript" framework="React"/>;
 
-export const Hello = (props: HelloProps) => {
-  return (<h1>Hello from {props.compiler} and {props.framework}!</h1>);
-};
+export default App;

@@ -12,13 +12,15 @@ const PATHS = {
 };
 
 const commonConfig: webpack.Configuration = {
-  entry: {
-    react: ['react-hot-loader/patch', PATHS.app],
-  },
+  entry:   [
+    'react-hot-loader/patch', // activate HMR for React
+    './index.tsx' // the entry point of our app
+  ],
   output: {
     filename: 'bundle.js',
     path: PATHS.build
   },
+  context: PATHS.app,
   plugins: [
     new HtmlWebpackPlugin({
       // Required

@@ -18,7 +18,7 @@
       "check-space"
     ],
     "curly": true,
-    "eofline": false,
+    "eofline": true,
     "forin": true,
     "import-name": false,
     "indent": [
@@ -32,6 +32,7 @@
     "jsdoc-format": true,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
+    "jsx-curly-spacing": true,
     "label-position": true,
     "max-line-length": [
       true,

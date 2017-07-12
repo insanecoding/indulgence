@@ -8,8 +8,8 @@
     "react-hot-loader": "^3.0.0-beta.7"
   },
   "devDependencies": {
-    "@types/node": "^8.0.10",
-    "@types/react": "^15.0.36",
+    "@types/node": "^8.0.11",
+    "@types/react": "^15.0.38",
     "@types/react-dom": "^15.5.1",
     "@types/react-hot-loader": "^3.0.3",
     "@types/webpack": "^3.0.4",
@@ -31,8 +31,9 @@
     "tslint-config-airbnb": "^5.2.1",
     "tslint-loader": "^3.5.3",
     "tslint-react": "^3.0.0",
+    "tsutils": "^2.6.1",
     "typescript": "~2.4.1",
-    "webpack": "^3.1.0",
+    "webpack": "^3.2.0",
     "webpack-dev-server": "2.5.1"
   },
   "scripts": {
