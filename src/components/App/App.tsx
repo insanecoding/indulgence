@@ -1,8 +1,8 @@
 // react
-import React from 'react';
+import React, { ReactElement } from 'react';
 // components
 import Greeter from '../Greeter/Greeter';
 
-const App = () => <Greeter compiler="Typescript" framework="React"/>;
+const App = (): ReactElement<{}> => <Greeter compiler="TS" framework="React"/>;
 
 export default App;
