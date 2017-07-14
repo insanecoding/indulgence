@@ -2,6 +2,9 @@ import * as webpack from 'webpack';
 import * as path from 'path';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as dotenv from 'dotenv';
+import * as OpenBrowserPlugin from 'open-browser-webpack-plugin';
+import * as FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
+
 
 dotenv.config();
 
@@ -27,6 +30,8 @@ const commonConfig: webpack.Configuration = {
       inject: false,
       template: '!!pug-loader!./public/index.pug'
     }),
+    // new OpenBrowserPlugin({ url: `http://${process.env.HOST}:${process.env.PORT}` }),
+    new FriendlyErrorsWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
   ],
