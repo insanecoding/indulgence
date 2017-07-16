@@ -16,7 +16,7 @@ const PATHS = {
 
 const commonConfig: webpack.Configuration = {
   entry:   [
-    'react-hot-loader/patch', // activate HMR for React
+    'react-hot-loader/patch', // activate HMR for React, should always go first
     './index.tsx' // the entry point of our app
   ],
   output: {
@@ -67,7 +67,14 @@ const developmentConfig = (): webpack.Configuration => {
       // unlike default `localhost`.
       host: process.env.HOST, // Defaults to `localhost`
       port: process.env.PORT, // Defaults to 8080
-      // maybe, use polling instead of watching
+      // maybe, use polling instead of watching?
+
+      // overlay with errors/warnings
+      overlay: {
+        errors: true,
+        warnings: true,
+      },
+
     },
     devtool: 'source-map',
 
@@ -85,6 +92,21 @@ const developmentConfig = (): webpack.Configuration => {
           enforce: 'pre',
           test: /\.js$/,
           loader: 'source-map-loader'
+        },
+
+        {
+          test: /\.tsx?$/,
+          enforce: 'pre',
+          loader: 'tslint-loader',
+          options: {
+            // tslint errors are displayed by default as warnings
+            // set emitErrors to true to display them as errors
+            emitErrors: true,
+            // tslint does not interrupt the compilation by default
+            // if you want any file with tslint errors to fail
+            // set failOnHint to true
+            failOnHint: true,
+          }
         }
       ]
     },
