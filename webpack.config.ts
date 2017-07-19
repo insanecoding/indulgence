@@ -4,6 +4,7 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as dotenv from 'dotenv';
 import * as OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import * as FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
+import { devServer } from './configs/devServer';
 
 
 dotenv.config();
@@ -46,36 +47,7 @@ const productionConfig = (): webpack.Configuration => commonConfig;
 
 const developmentConfig = (): webpack.Configuration => {
   const cfg: webpack.Configuration = {
-    devServer: {
-      // Enable history API fallback so HTML5 History API based
-      // routing works. Good for complex setups.
-      historyApiFallback: true,
-
-      // Display only errors to reduce the amount of output.
-      stats: 'errors-only',
-
-      // Don't refresh if hot loading fails. Good while
-      // implementing the client interface.
-      hotOnly: true,
-
-      // Parse host and port from env to allow customization.
-      //
-      // If you use Docker, Vagrant or Cloud9, set
-      // host: options.host || '0.0.0.0';
-      //
-      // 0.0.0.0 is available to all network devices
-      // unlike default `localhost`.
-      host: process.env.HOST, // Defaults to `localhost`
-      port: process.env.PORT, // Defaults to 8080
-      // maybe, use polling instead of watching?
-
-      // overlay with errors/warnings
-      overlay: {
-        errors: true,
-        warnings: true,
-      },
-
-    },
+    devServer,
     devtool: 'source-map',
 
     module: {
