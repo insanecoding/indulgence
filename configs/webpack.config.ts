@@ -3,7 +3,8 @@ import * as path from 'path';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import * as FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
-import { devServer } from './devServer';
+import { devServer, lintTypeScript } from './parts';
+import * as merge from 'webpack-merge';
 
 const PATHS = {
   app: path.join(__dirname, '../src'),
@@ -11,39 +12,43 @@ const PATHS = {
   nodeModules: path.join(__dirname, '../node_modules'),
 };
 
-const commonConfig: webpack.Configuration = {
-  entry:   [
-    'react-hot-loader/patch', // activate HMR for React, should always go first
-    './index.tsx' // the entry point of our app
-  ],
-  output: {
-    filename: 'bundle.js',
-    path: PATHS.build
+const commonConfig: webpack.Configuration = merge([
+  {
+    entry: [
+      'react-hot-loader/patch', // activate HMR for React, should always go first
+      './index.tsx' // the entry point of our app
+    ],
+    output: {
+      filename: 'bundle.js',
+      path: PATHS.build
+    },
+    context: PATHS.app,
+    plugins: [
+      new HtmlWebpackPlugin({
+        // Required
+        inject: false,
+        template: '!!pug-loader!./public/index.pug'
+      }),
+      // new OpenBrowserPlugin({ url: `http://${process.env.HOST}:${process.env.PORT}` }),
+      new FriendlyErrorsWebpackPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NamedModulesPlugin(),
+    ],
+    resolve: {
+      // Add '.ts' and '.tsx' as resolvable extensions.
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      modules: [PATHS.app, 'node_modules'],
+    },
   },
-  context: PATHS.app,
-  plugins: [
-    new HtmlWebpackPlugin({
-      // Required
-      inject: false,
-      template: '!!pug-loader!./public/index.pug'
-    }),
-    // new OpenBrowserPlugin({ url: `http://${process.env.HOST}:${process.env.PORT}` }),
-    new FriendlyErrorsWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-  ],
-  resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    modules: [PATHS.app, 'node_modules'],
-  },
-};
+  lintTypeScript({ include: PATHS.app }),
+]);
 
-const productionConfig = (): webpack.Configuration => commonConfig;
+const productionConfig: webpack.Configuration = merge([
+]);
 
-const developmentConfig = (): webpack.Configuration => {
-  const cfg: webpack.Configuration = {
-    devServer,
+const developmentConfig: webpack.Configuration = merge([
+  {
+    devServer: devServer({ host: process.env.HOST, port: +process.env.PORT }),
     devtool: 'source-map',
 
     module: {
@@ -61,35 +66,20 @@ const developmentConfig = (): webpack.Configuration => {
           test: /\.js$/,
           loader: 'source-map-loader'
         },
-
-        {
-          test: /\.tsx?$/,
-          enforce: 'pre',
-          loader: 'tslint-loader',
-          options: {
-            // tslint errors are displayed by default as warnings
-            // set emitErrors to true to display them as errors
-            emitErrors: true,
-            // tslint does not interrupt the compilation by default
-            // if you want any file with tslint errors to fail
-            // set failOnHint to true
-            failOnHint: true,
-          }
-        }
       ]
     },
-  };
-
-  return { ...commonConfig, ...cfg };
-};
+  }
+]);
 
 
 const config = (env: string): webpack.Configuration => {
-  if (env === 'production') {
-    return productionConfig();
-  }
+  const chooseConfig = (mode: string) => {
+    return (mode === 'production')
+      ? productionConfig
+      : developmentConfig;
+  };
 
-  return developmentConfig();
+  return merge(commonConfig, chooseConfig(env));
 };
 
 export default config; // tslint:disable-line
