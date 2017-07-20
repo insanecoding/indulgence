@@ -3,12 +3,12 @@ import * as path from 'path';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import * as FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
-import { devServer } from './configs/devServer';
+import { devServer } from './devServer';
 
 const PATHS = {
-  app: path.join(__dirname, 'src'),
-  build: path.join(__dirname, 'build'),
-  nodeModules: path.join(__dirname, 'node_modules'),
+  app: path.join(__dirname, '../src'),
+  build: path.join(__dirname, '../build'),
+  nodeModules: path.join(__dirname, '../node_modules'),
 };
 
 const commonConfig: webpack.Configuration = {
