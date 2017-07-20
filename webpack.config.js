@@ -1,12 +1,8 @@
-const tsc = require("typescript");
-const webpackConfig = require("fs").readFileSync("./webpack.config.ts", "utf8");
-const options = {
-  compilerOptions: {
-    target: "es5",
-    module: "commonjs",
-    allowJs: false,
-    checkJs: false
-  }
-};
+// import ts-node to transpile webpack.config.ts
+require("ts-node").register({
+  project: "./tsconfig-for-ts-node.json"
+})
+// import dotenv to externalize settings to .env file
+const dotenv = require ('dotenv').config();
 
-eval(tsc.transpileModule(webpackConfig, options).outputText);
+module.exports = require("./webpack.config.ts")

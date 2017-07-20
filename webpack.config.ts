@@ -1,13 +1,9 @@
 import * as webpack from 'webpack';
 import * as path from 'path';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
-import * as dotenv from 'dotenv';
 import * as OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import * as FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { devServer } from './configs/devServer';
-
-
-dotenv.config();
 
 const PATHS = {
   app: path.join(__dirname, 'src'),
